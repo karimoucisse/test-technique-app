@@ -1,4 +1,4 @@
-export const test = [
+export const javascriptTests = [
     {
         id: 1,
         name: "doubleInteger",
@@ -7,7 +7,7 @@ export const test = [
             "function doubleInteger(i) {",
             "   ",
             "    return i",
-            "};"
+            "}"
         ],
         "tests" : [
             { 
@@ -16,7 +16,7 @@ export const test = [
             },
             { 
                 "param" :  4,   
-                "result" : 16   
+                "result" : 8  
             },
             { 
                 "param" :  -10, 
@@ -40,7 +40,7 @@ export const test = [
             "function isNumberEven(i) {",
             "   ",
             "   return i",
-            "};"
+            "}"
         ],
         tests : [
             { 
@@ -69,11 +69,11 @@ export const test = [
             "function getFileExtension(i) {",
             "   ",
             "    return i",
-            "};"
+            "}"
         ],
         "tests" : [
             { 
-                "param" :  'blatherskite.png',   
+                "param" :  "blatherskite.png",   
                 "result" : 'png',
             },
             { 
@@ -102,7 +102,7 @@ export const test = [
             "function longestString(i) {",
             "   ",
             "   return i",
-            "};"
+            "}"
         ],
         tests : [
             { 
@@ -135,7 +135,7 @@ export const test = [
             "function arraySum(i) {",
             "   ",
             "    return i",
-            "};"
+            "}"
         ],
         "tests" : [
             { 

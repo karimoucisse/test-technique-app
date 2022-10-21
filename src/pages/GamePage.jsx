@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import styled from 'styled-components'
 import Editor from '../components/Editor'
 import Instruction from '../components/Instruction'
@@ -26,6 +25,7 @@ const Right = styled.div`
 `
 
 const GamePage = () => {
+
   return (
     <Container>
       <Left>
