@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import Editor from './components/Editor'
-import Instruction from './components/Instruction'
-import ValidationButton from './components/ValidationButton'
-import Console from './components/Console'
+import Editor from '../components/Editor'
+import Instruction from '../components/Instruction'
+import ValidationButton from '../components/ValidationButton'
+import Console from '../components/Console'
 
 const Container = styled.div`
   height: 100vh;
@@ -24,8 +24,8 @@ const Right = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `
-const App = () => {
 
+const GamePage = () => {
   return (
     <Container>
       <Left>
@@ -40,4 +40,4 @@ const App = () => {
   )
 }
 
-export default App
+export default GamePage
