@@ -3,6 +3,7 @@ import Editor from '../components/Editor'
 import Instruction from '../components/Instruction'
 import ValidationButton from '../components/ValidationButton'
 import Console from '../components/Console'
+import StopWatch from '../components/StopWatch'
 
 const Container = styled.div`
   height: 100vh;
@@ -29,6 +30,7 @@ const GamePage = () => {
   return (
     <Container>
       <Left>
+        <StopWatch/>
         <Instruction/>
         <ValidationButton/>
       </Left>

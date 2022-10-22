@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { javascriptTests } from "../javascriptTests"
-import { gameLaunch } from "../redux/testSlice"
+import { gameLaunch, runTest } from "../redux/testSlice"
+import { starTimer } from "../redux/timerSlice"
 
 const Container = styled.div`
     position: relative;
@@ -49,6 +50,7 @@ const Home = () => {
     const handleClick = () => {
         const tests = javascriptTests
         dispatch(gameLaunch(tests))
+        dispatch(starTimer())  //run timer
         if(test) {
             navigate('/games')
         }
