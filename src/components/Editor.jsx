@@ -5,7 +5,6 @@ import { levelUpdate, beforeTest, runTest, } from '../redux/testSlice';
 
 
 const Container = styled.div`
-    /* display: flex; */
     padding: 20px 50px;
 `
 const Textarea = styled.textarea`
@@ -43,18 +42,18 @@ const Editor = () => {
             if(a == test.result) {
                 dispatch(runTest({
                     message : {
-                        result: true,
-                        text: `test: "${currentTest.name}(${param});"...`,
-                        textresult: `vrai: ${a} est la bonne réponse`
+                        result: "true",
+                        testing: `test: "${currentTest.name}(${param});"...`,
+                        resultText: `vrai: ${a} est la bonne réponse`
                     }, 
                     results: true
                 }))
             } else {
                 dispatch(runTest({
                     message : {
-                        result: false,
-                        text: `test: "${currentTest.name}(${param});"...`,
-                        textresult: `faux: obtenu ${a} mais attendu ${test.result} Essayez à nouveau!`
+                        result: "false",
+                        testing: `test: "${currentTest.name}(${param});"...`,
+                        resultText: `faux: obtenu ${a} mais attendu ${test.result}. Essayez à nouveau!`
                     },
                     results: false
                 }))
@@ -65,7 +64,6 @@ const Editor = () => {
         handleTest()
     }
     useEffect(() => {
-        console.log(testResult);
         if(testResult === true) {
             dispatch(levelUpdate())
         } 
