@@ -1,10 +1,12 @@
 import styled from "styled-components"
 
 const Button = styled.button`
-  padding: 30px 40px;
+  cursor: pointer;
+  padding: 30px 70px;
   border-color: white;
   color: black;
-  font-size: 20px;
+  font-size: 30px;
+  font-weight: bold;
 `
 
 const ValidationButton = () => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components"
-import { levelUpdate, beforeTest, runTest, } from '../redux/testSlice';
+import { levelUpdate, beforeTest, runTest, reStartFinalResult, } from '../redux/testSlice';
 
 
 const Container = styled.div`
@@ -20,7 +20,8 @@ const Editor = () => {
     const dispatch = useDispatch()
     const [data, setData] = useState()
     const currentTest = useSelector(state => state.tests.currentTest)
-    const testResult = useSelector(state => state.tests.finalResult)
+    const finalResult = useSelector(state => state.tests.finalResult)
+    
 
     function handleChange(e) {
         const value = e.target.value
@@ -32,42 +33,51 @@ const Editor = () => {
         setData(testFunction)
     }, [currentTest])
 
-    const handleTest = () => {
-        dispatch(beforeTest())
-        currentTest.tests.forEach(test => {
-            const param = JSON.stringify(test.param)
-            let a = `const f = ${data}; f(${param})`
-            a = eval(a)
+    const handleTest = async () => {
+        try {
+            dispatch(beforeTest())
+            currentTest.tests.forEach(test => {
+                const param = JSON.stringify(test.param)
+                let a = `const f = ${data}; f(${param})`
+                a = eval(a)
+    
+                if(a === test.result) {
+                    dispatch(runTest({
+                        message : {
+                            result: "true",
+                            testing: `test: "${currentTest.name}(${param});"...`,
+                            resultText: `vrai: ${a} est bien la bonne réponse`
+                        }, 
+                        results: true
+                    }))
+                } else {
+                    dispatch(runTest({
+                        message : {
+                            result: "false",
+                            testing: `test: "${currentTest.name}(${param});"...`,
+                            resultText: `faux: obtenu ${a} mais attendu ${test.result}. Essayez à nouveau!`
+                        },
+                        results: false
+                    }))
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
 
-            if(a == test.result) {
-                dispatch(runTest({
-                    message : {
-                        result: "true",
-                        testing: `test: "${currentTest.name}(${param});"...`,
-                        resultText: `vrai: ${a} est la bonne réponse`
-                    }, 
-                    results: true
-                }))
-            } else {
-                dispatch(runTest({
-                    message : {
-                        result: "false",
-                        testing: `test: "${currentTest.name}(${param});"...`,
-                        resultText: `faux: obtenu ${a} mais attendu ${test.result}. Essayez à nouveau!`
-                    },
-                    results: false
-                }))
-            }
-        });
-    }
     const handleClick = async () => {
-        handleTest()
+        handleTest();
     }
+
     useEffect(() => {
-        if(testResult === true) {
-            dispatch(levelUpdate())
-        } 
-    }, [testResult])
+        if (finalResult === true) {
+            dispatch(levelUpdate());
+            dispatch(reStartFinalResult());
+        }
+    }, [finalResult])
+
 
     return (
         <Container>
@@ -77,7 +87,7 @@ const Editor = () => {
                 onChange={handleChange}
                 value= {data}
             >
-                It was a dark and stormy night...
+                
             </Textarea>
             <button onClick={handleClick}>click here</button>
         </Container>
