@@ -32,7 +32,7 @@ const Wrapper = styled.div`
 const Title = styled.h1`
     color: white;
     text-align: center;
-    font-size: 5em;
+    font-size: 3.5em;
     max-width: 700px;
 `
 const Button = styled.button`
@@ -40,7 +40,11 @@ const Button = styled.button`
     padding: 20px 50px;
     cursor: pointer;
     border: none;
+    background-color: teal;
+    color: white;
+    border-radius: 10px;
     font-size: 20px;
+    font-weight: 600;
 `
 const Home = () => {
     const navigate = useNavigate()
@@ -53,14 +57,13 @@ const Home = () => {
         dispatch(starTimer())  //run timer
         if(test) {
             navigate('/games')
-        }
-    }
+        }    }
   return (
     <Container>
         <ShadowBox/>
         <Wrapper>
-            <Title>Coder du Javascript sous pressions</Title>
-            <Button onClick={handleClick}>Commencer le jeu</Button>
+            <Title>YOU CAN'T JAVASCRIPT UNDER PRESSURE</Title>
+            <Button onClick={handleClick}>Start the game</Button>
         </Wrapper>
     </Container>
   )

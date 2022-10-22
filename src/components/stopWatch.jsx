@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
+import { updateTimer } from "../redux/timerSlice"
 
 const Container = styled.h1`
-    /* border: black 2px solid; */
-    /* background-color: #ebe4e4; */
     color: white;
-    /* padding: 10px 35px; */
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 35px;
+    width: 150px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const StopWatch = () => {
     const [second, setSecond] = useState(0)
     const [minute, setMinute] = useState(0)
     const timeOn = useSelector(state => state.timer.timeOn)
+    const dispatch = useDispatch()
 
     // handle second
     useEffect(() => { 
@@ -42,11 +50,14 @@ const StopWatch = () => {
         
     }, [timeOn])
 
+    useEffect(() => {
+        dispatch(updateTimer(`${minute}min et ${second}s`))
+    }, [minute, second])
 
 
   return (
     <Container>
-        {minute} : {second}
+        {minute}:{second}
     </Container>
   )
 }

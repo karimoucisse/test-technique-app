@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Editor from '../components/Editor'
+import CodeEditor from '../components/CodeEditor'
 import Instruction from '../components/Instruction'
 import ValidationButton from '../components/ValidationButton'
 import Console from '../components/Console'
@@ -16,26 +16,30 @@ const Left = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 0px 50px;
-  background-color: darkblue;
+  background-color: teal;
+  position: relative;
 `
 const Right = styled.div`
-  flex: 1;
+  flex: 1.5;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 `
-
+const Title = styled.h1`
+  color: white;
+  font-size: 2.6em;
+`
 const GamePage = () => {
 
   return (
     <Container>
       <Left>
         <StopWatch/>
-        <Instruction/>
+        <Title>You can't Javascript under pressure</Title>
+        {/* <Instruction/> */}
         <ValidationButton/>
       </Left>
       <Right>
-        <Editor/>
+        <CodeEditor/>
         <Console/>
       </Right>
     </Container>

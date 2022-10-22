@@ -4,27 +4,32 @@ const testSlice = createSlice({
     name: "test",
     initialState: {
         level: 1,
+        maxLevel : 0,
         javascriptTests: [],
         currentTest: [],
-        time: " ",
-        consoleMessage: [],
-        // testResults: [],
+        consoleResult: [],
+        codeEditorValue: " ",
     },
     reducers: {
         gameLaunch: (state, action) => {
             state.javascriptTests = action.payload
+
             const test = state.javascriptTests.find(test => (
                 test.id === 1
             ))
             state.currentTest = test
+
+            state.maxLevel = state.javascriptTests.length -1
         },
         beforeTest: (state) => {
-            state.consoleMessage = []
+            state.consoleResult = []
             state.testResults = []
         },
         runTest: (state, action) => {
-            state.consoleMessage.push(action.payload.message);
-            // state.testResults.push(action.payload.results)
+            state.consoleResult.push(action.payload.message);
+        },
+        updateCodeEditorValue: (state, action) => {
+            state.codeEditorValue = action.payload
         },
         timeUpdate: (state, action) => {
             state.time = action.payload
@@ -46,7 +51,7 @@ export const {
     gameLaunch,
     beforeTest,
     runTest,
-    reStartFinalResult,
+    updateCodeEditorValue,
     timeUpdate,
     levelUpdate,
     EndOfGame
