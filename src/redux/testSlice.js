@@ -8,8 +8,7 @@ const testSlice = createSlice({
         currentTest: [],
         time: " ",
         consoleMessage: [],
-        testResults: [],
-        finalResult: false
+        // testResults: [],
     },
     reducers: {
         gameLaunch: (state, action) => {
@@ -22,20 +21,10 @@ const testSlice = createSlice({
         beforeTest: (state) => {
             state.consoleMessage = []
             state.testResults = []
-            state.finalResult = false
         },
         runTest: (state, action) => {
             state.consoleMessage.push(action.payload.message);
-            state.testResults.push(action.payload.results)
-            const findResult = state.testResults.includes(false)
-            if(findResult === true) {
-                state.finalResult = false
-            }else {
-                state.finalResult = true
-            }
-        },
-        reStartFinalResult: (state) => {
-            state.finalResult = false
+            // state.testResults.push(action.payload.results)
         },
         timeUpdate: (state, action) => {
             state.time = action.payload

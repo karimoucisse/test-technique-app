@@ -19,6 +19,8 @@ const Textarea = styled.textarea`
 const Editor = () => {
     const dispatch = useDispatch()
     const [data, setData] = useState()
+    const [click, setClick] = useState(0)
+    const [result, setResult] = useState(false)
     const currentTest = useSelector(state => state.tests.currentTest)
     const finalResult = useSelector(state => state.tests.finalResult)
     
@@ -33,38 +35,50 @@ const Editor = () => {
         setData(testFunction)
     }, [currentTest])
 
-    const handleTest = async () => {
-        try {
-            dispatch(beforeTest())
-            currentTest.tests.forEach(test => {
-                const param = JSON.stringify(test.param)
-                let a = `const f = ${data}; f(${param})`
-                a = eval(a)
-    
-                if(a === test.result) {
-                    dispatch(runTest({
-                        message : {
-                            result: "true",
-                            testing: `test: "${currentTest.name}(${param});"...`,
-                            resultText: `vrai: ${a} est bien la bonne réponse`
-                        }, 
-                        results: true
-                    }))
-                } else {
-                    dispatch(runTest({
-                        message : {
-                            result: "false",
-                            testing: `test: "${currentTest.name}(${param});"...`,
-                            resultText: `faux: obtenu ${a} mais attendu ${test.result}. Essayez à nouveau!`
-                        },
-                        results: false
-                    }))
-                }
-            });
-        } catch (error) {
-            console.log(error);
+    const handleTest = () => {
+        const resultArray = []
+        dispatch(beforeTest())
+
+        currentTest.tests.forEach(test => {
+            const param = JSON.stringify(test.param)
+            let a = `const f = ${data}; f(${param})`
+            a = eval(a)
+
+            if(a === test.result) {
+                dispatch(runTest({
+                    message : {
+                        result: "true",
+                        testing: `test: "${currentTest.name}(${param});"...`,
+                        resultText: `vrai: ${a} est bien la bonne réponse`
+                    }, 
+                    results: true
+                }))
+                resultArray.push("true")
+            } else {
+                dispatch(runTest({
+                    message : {
+                        result: "false",
+                        testing: `test: "${currentTest.name}(${param});"...`,
+                        resultText: `faux: obtenu ${a} mais attendu ${test.result}. Essayez à nouveau!`
+                    },
+                    results: false
+                }))
+                resultArray.push("false")
+            }
+        });
+        if(resultArray.includes("false")) {
+            setResult(false)
+            return false
+        }else {
+            setResult(true)
+            setClick(click + 1)
+            console.log(result, click);
+            return true
         }
-        
+    }
+    const handleSecondeClick = () => {
+        dispatch(levelUpdate());
+        setClick(0)
     }
 
     const handleClick = async () => {
@@ -72,12 +86,11 @@ const Editor = () => {
     }
 
     useEffect(() => {
-        if (finalResult === true) {
-            dispatch(levelUpdate());
-            dispatch(reStartFinalResult());
+        if (click === 2 && result) {
+            handleSecondeClick()
         }
-    }, [finalResult])
-
+    }, [click])
+    
 
     return (
         <Container>
