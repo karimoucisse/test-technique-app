@@ -5,15 +5,12 @@ import { startGame } from "../functions/startgame"
 
 
 const Container = styled.div`
-    position: relative;
     height: 100vh;
     width: 100%;
+    background: url("/home.jpg") no-repeat center;
     background-size: cover;
-    background-color: black;
 `
 const Wrapper = styled.div`
-    position: relative;
-    z-index: 3;
     width: 100%;
     height: 100%;
     display: flex;
@@ -29,13 +26,12 @@ const Title = styled.h1`
 `
 const Paragraph = styled.p`
     color: white;
-    margin: 40px 0;
+    margin: 40px;
 `
 const Span = styled.span`
     font-weight: 700;
 `
 const Button = styled.button`
-    /* margin-top: 40px; */
     padding: 20px 50px;
     cursor: pointer;
     border: none;

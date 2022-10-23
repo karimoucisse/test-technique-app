@@ -19,8 +19,9 @@ const Container = styled.h1`
 `
 
 const StopWatch = () => {
-    const [second, setSecond] = useState(0)
-    const [minute, setMinute] = useState(0)
+    const [timer, setTimer] = useState(0)
+    const second = `0${(timer % 60)}`.slice(-2)
+    const minute = `${Math.floor(timer / 60)}`
     const timeOn = useSelector(state => state.timer.timeOn)
     const dispatch = useDispatch()
     const testResult = useSelector(state => state.tests.result)
@@ -30,7 +31,7 @@ const StopWatch = () => {
         let interval = null
         if(timeOn) {
             interval = setInterval(() => {
-                setSecond(prev => prev === 59 ? 0 : prev +1)
+                setTimer(prev => prev +1)
             }, 1000) // function run every second
         } else {
             clearInterval(interval)
@@ -39,19 +40,22 @@ const StopWatch = () => {
         
     }, [timeOn])
 
+    // useEffect(() => {
+    //     setMinute(prev => second === 59 ? prev +1 : minute)
+    // }, [second])
     // handle minute
-    useEffect(() => {
-        let interval = null
-        if(timeOn) {
-            interval = setInterval(() => {
-                setMinute(prev => prev +1)
-            }, 60000) // function run every minute
-        } else {
-            clearInterval(interval)
-        }
-        return () => clearInterval(interval)
+    // useEffect(() => {
+    //     let interval = null
+    //     if(timeOn) {
+    //         interval = setInterval(() => {
+    //             setMinute(prev => prev +1)
+    //         }, 60000) // function run every minute
+    //     } else {
+    //         clearInterval(interval)
+    //     }
+    //     return () => clearInterval(interval)
         
-    }, [timeOn])
+    // }, [timeOn])
 
     useEffect(() => {
         dispatch(updateTimer(`${minute}min et ${second}s`))
@@ -68,7 +72,7 @@ const StopWatch = () => {
 
   return (
     <Container>
-        {minute}:{second < 10 && 0}{second}
+        {minute}:{second}
     </Container>
   )
 }

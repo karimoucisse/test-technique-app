@@ -21,6 +21,7 @@ const MessageParagraph = styled.div`
   padding: 5px 20px;
   font-size: 17px;
   margin-bottom: 10px;
+  padding: 5px 70px 5px 20px;
 `
 const ResultParagraph = styled.div`
   width: 100%;
