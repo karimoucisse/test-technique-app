@@ -1,9 +1,7 @@
-import testSlice, { 
-    levelUpdate, 
+import  {  
     beforeTest, 
     runTest, 
-    updateResult,
-    EndOfGame
+    updateResult
 } from '../redux/testSlice';
 
 export const handleTest = (

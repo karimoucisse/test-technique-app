@@ -42,7 +42,7 @@ const GamePage = () => {
       // then restart the game
       startGame(dispatch)
     }
-  }, [currentTest])
+  }, [currentTest, dispatch])
 
   return (
     <Container>

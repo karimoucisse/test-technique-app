@@ -40,23 +40,6 @@ const StopWatch = () => {
         
     }, [timeOn])
 
-    // useEffect(() => {
-    //     setMinute(prev => second === 59 ? prev +1 : minute)
-    // }, [second])
-    // handle minute
-    // useEffect(() => {
-    //     let interval = null
-    //     if(timeOn) {
-    //         interval = setInterval(() => {
-    //             setMinute(prev => prev +1)
-    //         }, 60000) // function run every minute
-    //     } else {
-    //         clearInterval(interval)
-    //     }
-    //     return () => clearInterval(interval)
-        
-    // }, [timeOn])
-
     useEffect(() => {
         dispatch(updateTimer(`${minute}min et ${second}s`))
     }, [minute, second])

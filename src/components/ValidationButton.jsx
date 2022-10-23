@@ -3,11 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import { handleTest } from "../functions/handleTest";
-import testSlice, { 
+import { 
   levelUpdate, 
   beforeTest, 
-  runTest, 
-  updateResult,
   EndOfGame
 } from '../redux/testSlice';
 
@@ -59,7 +57,7 @@ const ValidationButton = () => {
       handleSecondeClick() // if the function "handletest" return true, 
       // then the second click will launch the function "handleSecondeClick"
     }
-  }, [click])
+  }, [click, handleSecondeClick, result])
 
   useEffect(() => {
     if(result && level === maxLevel) {
@@ -67,7 +65,7 @@ const ValidationButton = () => {
       // the testResult state is set to true, and the timer is stoped
       navigate("/end")
     }
-  }, [result])
+  }, [result, dispatch, level, maxLevel])
 
   
   return (
