@@ -18,6 +18,7 @@ const Textarea = styled.textarea`
     border: 2px solid black;
     font-size: 18px;
     background-color: #f2ede8;
+    resize: none;
 `
 
 const Editor = () => {
