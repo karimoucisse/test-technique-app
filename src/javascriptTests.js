@@ -45,7 +45,6 @@ export const javascriptTests = [
             "   //  will be an integer. Return true if it's even, and false if it isn't.",
             "   ",
             "   ",
-            "   return i",
             "}"
         ],
         tests : [
@@ -77,7 +76,6 @@ export const javascriptTests = [
             "   //i will be a string, but it may not have a file extension. Return the file extension (with no period) if it has one, otherwise false",
             "   ",
             "   ",
-            "    return i",
             "}"
         ],
         "tests" : [
@@ -113,7 +111,6 @@ export const javascriptTests = [
             "   // i will be an array.return the longest string in the array",
             "   ",
             "   ",
-            "   return i",
             "}"
         ],
         tests : [
@@ -149,7 +146,6 @@ export const javascriptTests = [
             "   // i will be an array, containing integers, strings and/or arrays like itself.Sum all the integers you find, anywhere in the nest of arrays.",
             "   ",
             "   ",
-            "    return i",
             "}"
         ],
         "tests" : [

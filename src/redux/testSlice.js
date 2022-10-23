@@ -25,6 +25,7 @@ const testSlice = createSlice({
         beforeTest: (state) => {
             state.consoleResult = []
             state.testResults = []
+            state.result = false
         },
         runTest: (state, action) => {
             state.consoleResult.push(action.payload.message);

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import {useEffect, useRef, useState} from 'react';
 import styled from "styled-components"
+import CongratulationsMessage from "./CongratulationsMessage";
 
 const Container = styled.div`
   width: 100%;
@@ -31,6 +32,7 @@ const ResultParagraph = styled.div`
   }
 `
 const Console = () => {
+  const testResult = useSelector(state => state.tests.result)
   const consoleResult = useSelector(state => state.tests.consoleResult)
   const consoleMessage = useSelector(state => state.tests.currentTest.consoleMessage)
   const bottomRef = useRef(null);
@@ -51,6 +53,7 @@ const Console = () => {
           </ParagraphContainer>
         })}
         <div ref={bottomRef} />
+        {testResult && <CongratulationsMessage/>}
       </ResultContainer>
       {/* success text */}
       {/* SUCCESS! All tests passed. You've used 155:55 so far. Well done!

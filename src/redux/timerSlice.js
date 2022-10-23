@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const timerSlice = createSlice({
     name: "timer",
     initialState: {
-        timer: "",
+        time: "",
         timeOn: false,
     },
     reducers:  {
@@ -11,7 +11,7 @@ const timerSlice = createSlice({
             state.timeOn = true
         },
         updateTimer: (state, action) => {
-            state.timer = action.payload
+            state.time = action.payload
         },
         stopTimer: (state) => {
             state.timeOn = false
