@@ -9,12 +9,20 @@ const Container = styled.div`
 `
 
 const CongratulationsMessage = () => {
-    const level  = useSelector(state => state.tests.level) +1
+    const level  = useSelector(state => state.tests.level)
+    const maxLevel  = useSelector(state => state.tests.level) +1
     const time  = useSelector(state => state.timer.time) 
+    
   return (
     <Container>
-        SUCCESS! All tests passed. You've used {time} so far. Well done!
-        Ready for level {level}? Click the button "Test" to move on.
+        {level !== maxLevel && 
+            `SUCCESS! All tests passed. You've used ${time} so far. Well done!
+            Ready for level ${level +1}? Click the button "Test" to move on.`
+        }
+        
+        {level === maxLevel &&
+            `test`
+        }
     </Container>
   )
 }

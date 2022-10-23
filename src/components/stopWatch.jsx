@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styled from "styled-components"
-import { updateTimer } from "../redux/timerSlice"
+import { starTimer, stopTimer, updateTimer } from "../redux/timerSlice"
 
 const Container = styled.h1`
     color: white;
@@ -23,6 +23,7 @@ const StopWatch = () => {
     const [minute, setMinute] = useState(0)
     const timeOn = useSelector(state => state.timer.timeOn)
     const dispatch = useDispatch()
+    const testResult = useSelector(state => state.tests.result)
 
     // handle second
     useEffect(() => { 
@@ -55,6 +56,14 @@ const StopWatch = () => {
     useEffect(() => {
         dispatch(updateTimer(`${minute}min et ${second}s`))
     }, [minute, second])
+
+    useEffect(() => {
+        if(testResult) {
+            dispatch(stopTimer()) // if test is true stop the timer
+        }else {
+            dispatch(starTimer()) // if test is true start the timer
+        }
+    }, [testResult])
 
 
   return (
