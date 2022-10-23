@@ -38,7 +38,7 @@ export const javascriptTests = [
     {
         id: 2,
         name: "isNumberEven",
-        consoleMessage: "Little bit trickier now. The clock's started ticking again. Return true or false depending on whether the number is even. You can use console.log() and alert(); the results will show up here.",
+        consoleMessage: "Little bit trickier now. The clock's started ticking again. Return true or false depending on whether the number is even.",
         code : [
             "function isNumberEven(i) {",
             "   ",
