@@ -2,11 +2,13 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
+import { handleTest } from "../functions/handleTest";
 import testSlice, { 
   levelUpdate, 
   beforeTest, 
   runTest, 
-  updateResult
+  updateResult,
+  EndOfGame
 } from '../redux/testSlice';
 
 const Button = styled.button`
@@ -35,64 +37,21 @@ const ValidationButton = () => {
   const level = useSelector(state => state.tests.level)
   const maxLevel = useSelector(state => state.tests.maxLevel)
 
-  const handleTest = () => {
-    const resultArray = []
-    dispatch(beforeTest())
-
-    currentTest.tests.forEach(test => {
-      const param = JSON.stringify(test.param)
-      let testFunction = `const f = ${codeEditorValue}; f(${param})`
-      let expectedResult = eval(testFunction)
-
-      if(expectedResult === test.result) {
-
-        dispatch(runTest({ 
-          message : { // display message in the console
-            // see more in the file Console.jsx in the components folder
-            result: "true",
-            testing: `test: "${currentTest.name}(${param});"...`,
-            resultText: `RIGHT: ${expectedResult} is the right answer.`
-          }, 
-          results: true
-        }))
-        resultArray.push("true")
-      } else {
-        dispatch(runTest({
-          message : { // display message in the console
-              result: "false",
-              testing: `test: "${currentTest.name}(${param});"...`,
-              resultText: `WRONG: Got ${expectedResult} but expected ${test.result}. Try again!`
-          },  
-          results: false
-        }))
-        resultArray.push("false")
-      }
-    });
-
-    if(resultArray.includes("false")) {
-      dispatch(updateResult(false)) 
-      return false  // return false if at least one test is false
-    }else {
-      dispatch(updateResult(true)) 
-      setClick(click + 1)
-      console.log(result, click);
-      return true // return true if all test are true
-    }
-  }
-
   const handleSecondeClick = () => {
     dispatch(levelUpdate()); // increase current test level
     dispatch(beforeTest()) // reset the console, and the test Result 
     // see more at testSlice in redux folder
     setClick(0)
-
-    if(level === maxLevel) {
-      navigate("/end")
-    }
   }
 
   const handleClick = () => {
-    handleTest();  // the first click test the user function
+    handleTest(
+      dispatch, 
+      currentTest,
+      setClick, 
+      click, 
+      codeEditorValue
+    )  // test the function written by the user
   }
 
   useEffect(() => {
@@ -101,6 +60,14 @@ const ValidationButton = () => {
       // then the second click will launch the function "handleSecondeClick"
     }
   }, [click])
+
+  useEffect(() => {
+    if(result && level === maxLevel) {
+      dispatch(EndOfGame()) // when the last lvl is finished
+      // the testResult state is set to true, and the timer is stoped
+      navigate("/end")
+    }
+  }, [result])
 
   
   return (

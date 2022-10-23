@@ -46,8 +46,8 @@ const testSlice = createSlice({
             ))
             state.currentTest = test
         },
-        EndOfGame: (state, action) => {
-
+        EndOfGame: (state) => {
+            state.result = true
         }
     }
 })

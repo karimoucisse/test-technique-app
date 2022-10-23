@@ -55,9 +55,6 @@ const Console = () => {
         <div ref={bottomRef} />
         {testResult && <CongratulationsMessage/>}
       </ResultContainer>
-      {/* success text */}
-      {/* SUCCESS! All tests passed. You've used 155:55 so far. Well done!
-      Click Test to move on to level 2! */}
     </Container>
   )
 }

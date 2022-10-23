@@ -19,10 +19,6 @@ const CongratulationsMessage = () => {
             `SUCCESS! All tests passed. You've used ${time} so far. Well done!
             Ready for level ${level +1}? Click the button "Test" to move on.`
         }
-        
-        {level === maxLevel &&
-            `test`
-        }
     </Container>
   )
 }

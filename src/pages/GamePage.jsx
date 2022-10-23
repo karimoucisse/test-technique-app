@@ -4,6 +4,9 @@ import ValidationButton from '../components/ValidationButton'
 import Console from '../components/Console'
 import StopWatch from '../components/StopWatch'
 import Level from '../components/Level'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { startGame } from '../functions/startgame'
 
 const Container = styled.div`
   height: 100vh;
@@ -31,6 +34,15 @@ const Title = styled.h1`
   font-size: 2.6em;
 `
 const GamePage = () => {
+  const currentTest  = useSelector(state => state.tests.currentTest) 
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(currentTest.length === 0) { // if we don't have currente lvl test
+      // then restart the game
+      startGame(dispatch)
+    }
+  }, [currentTest])
 
   return (
     <Container>
