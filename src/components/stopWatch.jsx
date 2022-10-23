@@ -6,11 +6,13 @@ import { updateTimer } from "../redux/timerSlice"
 const Container = styled.h1`
     color: white;
     position: absolute;
-    top: 0;
+    top: 0px;
+    left: 0;
     right: 0;
+    margin: auto;
     font-size: 35px;
     width: 150px;
-    height: 70px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,7 +59,7 @@ const StopWatch = () => {
 
   return (
     <Container>
-        {minute}:{second}
+        {minute}:{second < 10 && 0}{second}
     </Container>
   )
 }

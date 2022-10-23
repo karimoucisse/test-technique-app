@@ -2,10 +2,11 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
-import { 
+import testSlice, { 
   levelUpdate, 
   beforeTest, 
   runTest, 
+  updateResult
 } from '../redux/testSlice';
 
 const Button = styled.button`
@@ -28,7 +29,7 @@ const ValidationButton = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [click, setClick] = useState(0)
-  const [result, setResult] = useState(false)
+  const result = useSelector(state => state.tests.result)
   const currentTest = useSelector(state => state.tests.currentTest)
   const codeEditorValue = useSelector(state => state.tests.codeEditorValue)
   const level = useSelector(state => state.tests.level)
@@ -40,45 +41,50 @@ const ValidationButton = () => {
 
     currentTest.tests.forEach(test => {
       const param = JSON.stringify(test.param)
-      let a = `const f = ${codeEditorValue}; f(${param})`
-      a = eval(a)
+      let testFunction = `const f = ${codeEditorValue}; f(${param})`
+      let expectedResult = eval(testFunction)
 
-      if(a === test.result) {
-        dispatch(runTest({
-          message : {
+      if(expectedResult === test.result) {
+
+        dispatch(runTest({ 
+          message : { // display message in the console
+            // see more in the file Console.jsx in the components folder
             result: "true",
             testing: `test: "${currentTest.name}(${param});"...`,
-            resultText: `vrai: ${a} est bien la bonne réponse`
+            resultText: `RIGHT: ${expectedResult} is the right answer.`
           }, 
           results: true
         }))
         resultArray.push("true")
       } else {
         dispatch(runTest({
-          message : {
+          message : { // display message in the console
               result: "false",
               testing: `test: "${currentTest.name}(${param});"...`,
-              resultText: `faux: obtenu ${a} mais attendu ${test.result}. Essayez à nouveau!`
-          },
+              resultText: `WRONG: Got ${expectedResult} but expected ${test.result}. Try again!`
+          },  
           results: false
         }))
         resultArray.push("false")
       }
     });
+
     if(resultArray.includes("false")) {
-      setResult(false)
-      return false
+      dispatch(updateResult(false)) 
+      return false  // return false if at least one test is false
     }else {
-      setResult(true)
+      dispatch(updateResult(true)) 
       setClick(click + 1)
       console.log(result, click);
-      return true
+      return true // return true if all test are true
     }
   }
+
   const handleSecondeClick = () => {
-    dispatch(levelUpdate());
+    dispatch(levelUpdate()); // increase current test level
+    dispatch(beforeTest()) // reset the console, and the test Result 
+    // see more at testSlice in redux folder
     setClick(0)
-    dispatch(beforeTest())
 
     if(level === maxLevel) {
       navigate("/end")
@@ -86,12 +92,13 @@ const ValidationButton = () => {
   }
 
   const handleClick = () => {
-    handleTest();
+    handleTest();  // the first click test the user function
   }
 
   useEffect(() => {
     if (click === 2 && result) {
-      handleSecondeClick()
+      handleSecondeClick() // if the function "handletest" return true, 
+      // then the second click will launch the function "handleSecondeClick"
     }
   }, [click])
 

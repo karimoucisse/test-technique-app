@@ -5,6 +5,7 @@ const testSlice = createSlice({
     initialState: {
         level: 1,
         maxLevel : 0,
+        result: false,
         javascriptTests: [],
         currentTest: [],
         consoleResult: [],
@@ -19,7 +20,7 @@ const testSlice = createSlice({
             ))
             state.currentTest = test
 
-            state.maxLevel = state.javascriptTests.length -1
+            state.maxLevel = state.javascriptTests.length 
         },
         beforeTest: (state) => {
             state.consoleResult = []
@@ -27,6 +28,9 @@ const testSlice = createSlice({
         },
         runTest: (state, action) => {
             state.consoleResult.push(action.payload.message);
+        },
+        updateResult: (state, action) => {
+            state.result = action.payload
         },
         updateCodeEditorValue: (state, action) => {
             state.codeEditorValue = action.payload
@@ -51,6 +55,7 @@ export const {
     gameLaunch,
     beforeTest,
     runTest,
+    updateResult,
     updateCodeEditorValue,
     timeUpdate,
     levelUpdate,

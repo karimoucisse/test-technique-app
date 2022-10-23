@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux"
+import {useEffect, useRef, useState} from 'react';
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -6,9 +7,11 @@ const Container = styled.div`
   height: 400px;
   margin-top: 20px;
   overflow: auto;
-  padding: 20px 50px;
 `
 const ResultContainer = styled.div`
+  padding: 5px 50px;
+`
+const ParagraphContainer = styled.div`
   margin-bottom: 10px;
 `
 const MessageParagraph = styled.div`
@@ -22,26 +25,36 @@ const ResultParagraph = styled.div`
   width: 100%;
   font-size: 17px;
   padding: 5px 20px;
-  /* border-radius: 10px; */
   &:nth-child(2) {
     background-color: ${props => props.result === "true" ? "teal" : "#CC0000" };
-    /* color: ${props => props.result === "true" ? "black" : "white" }; */
     color: white;
   }
 `
 const Console = () => {
   const consoleResult = useSelector(state => state.tests.consoleResult)
   const consoleMessage = useSelector(state => state.tests.currentTest.consoleMessage)
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    // 👇️ scroll to bottom every time we add a messages 
+    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+  }, [consoleResult]);
 
   return (
     <Container>
       <MessageParagraph>{consoleMessage}</MessageParagraph>
-      {consoleResult.map((element, index) => {
-        return <ResultContainer key={index}>
-          <ResultParagraph >{element.testing}</ResultParagraph>
-          <ResultParagraph result= {element.result}>{element.resultText}</ResultParagraph>
-        </ResultContainer>
-      })}
+      <ResultContainer>
+        {consoleResult.map((element, index) => {
+          return <ParagraphContainer key={index}>
+            <ResultParagraph >{element.testing}</ResultParagraph>
+            <ResultParagraph result= {element.result}>{element.resultText}</ResultParagraph>
+          </ParagraphContainer>
+        })}
+        <div ref={bottomRef} />
+      </ResultContainer>
+      {/* success text */}
+      {/* SUCCESS! All tests passed. You've used 155:55 so far. Well done!
+      Click Test to move on to level 2! */}
     </Container>
   )
 }

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import CodeEditor from '../components/CodeEditor'
-import Instruction from '../components/Instruction'
 import ValidationButton from '../components/ValidationButton'
 import Console from '../components/Console'
 import StopWatch from '../components/StopWatch'
+import Level from '../components/Level'
 
 const Container = styled.div`
   height: 100vh;
@@ -15,7 +15,7 @@ const Left = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 0px 50px;
+  padding: 40px 30px;
   background-color: teal;
   position: relative;
 `
@@ -23,6 +23,8 @@ const Right = styled.div`
   flex: 1.5;
   display: flex;
   flex-direction: column;
+  background: url("/motif.jpg") no-repeat center;
+  background-size: cover;
 `
 const Title = styled.h1`
   color: white;
@@ -34,8 +36,8 @@ const GamePage = () => {
     <Container>
       <Left>
         <StopWatch/>
+        <Level/>
         <Title>You can't Javascript under pressure</Title>
-        {/* <Instruction/> */}
         <ValidationButton/>
       </Left>
       <Right>
